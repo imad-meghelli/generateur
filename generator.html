@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+	<head>
+		<title>Generateur de mots de passe - PASSWORLD</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="monStyleExterne.CSS">
+	
+		<link rel="stylesheet" href="jquery-ui.css" type="text/css" media="all" />
+		<script src="jquery.min.js" type="text/javascript"></script>
+		<script src="jquery-ui.min.js" type="text/javascript"></script>
+		<script src="./price_range_script.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="./price_range_style.css"/>
+		<script src="zxcvbn.js"></script>
+	</head>
+	
+	<style>
+		header {
+			color : #B22222;
+			border-style : solid;
+			border-color : #B22222;
+			border-radius : 10px;
+			background-image : url('world_map.jpg');
+			background-position: center top;
+			background-repeat: no-repeat;
+			background-size : 50% 70%;
+		}
+		nav {
+			background-color:#B22222;
+			text-align : center;
+		}
+		fieldset {
+			border-style : dashed;
+			border-color : #B22222;
+			border-top-left-radius : 10px;
+			border-top-right-radius : 10px;
+		}
+		legend {
+			color : #B22222;
+			font-size : 20px;
+			font-weight : bold;
+			font-variant : small-caps;
+			text-decoration : underline overline;
+			font-family : "Lucida Calligraphy", "Lucida Handwriting", cursive;
+		}
+		a{
+			color : white;
+			font-size : 20px;
+			line-height : 30px;
+			text-decoration : none;
+		}
+		input {
+			height : 20px;
+			border-radius : 10px;
+		}
+		select {
+			height : 25px;
+			border-top-left-radius : 10px;
+			border-bottom-left-radius : 10px;
+		}
+		input, select, option, textarea{
+			font-weight : bold ;
+		}
+		input[type="radio"], input[type="date"], input[type="file"], select {
+			cursor : pointer;
+		}
+		input[type="submit"]{
+			width : 50px;
+			height: 50px;
+			border-style : solid;
+			border-color : green;
+			border-radius : 10px;
+			background-image: url('submit.png');
+			background-size: 100% 100%;
+		}
+	</style>
+	<body>
+		<header>
+			<table>
+				<tr>
+					<td width="17%">
+						<img src="passworld.png" width="300px" height="90px">
+					</td>
+					<td width="83%">
+						<h1 align="right"><i>Passwords made easy</i></h1>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<nav>
+				<ul>
+					<li style="display:inline"><a href="generator.html"><button style="border-style:inset;">Générateur de mots de passe</button></a>&nbsp;&nbsp;&nbsp;</li>
+					<li style="display:inline"><a href="gestionnaire.html"><button>Gestionnaire de mots de passe</button></a>&nbsp;&nbsp;&nbsp;</li>
+					<li style="display:inline"><a href="testeurdeforce.html"><button>Test de force de mots de passe</button></a>&nbsp;&nbsp;&nbsp;</li>
+					<li style="display:inline"><a href="faq.html"><button>À propos & FAQ</button></a>&nbsp;&nbsp;&nbsp;</li>
+				</ul>
+			</nav>	
+		</header>
+		<div>
+			<h2 align="center">Generateur de mots de passe</h2>
+				<table width="80%" align="center">
+					<tr>
+						<td><b>Taille du Mot de Passe</b>
+						<div class="price-range-block">
+						  <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+						  <div style="margin-bottom:10px">
+							<input style="width:3%;" readonly id="min_price" type="number" oninput="validity.valid||(value='8');"  class="price-range-field" />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input style="width:3%;" readonly id="max_price" type="number" oninput="validity.valid||(value='20');"  class="price-range-field" />
+						  </div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td><label><input type="checkbox" id="speciaux" checked> <b>Inclure Symboles Spéciaux</b></label></td>
+					</tr>
+					<tr>
+						<td><label><input type="checkbox" id="minuscules" checked> <b>Inclure Minuscules</b></label></td>
+					</tr>
+					<tr>
+						<td><label><input type="checkbox" id="majuscules" checked> <b>Inclure Majuscules</b></label></td>
+					</tr>
+					<tr>
+						<td><label><input type="checkbox" id="nombres" checked> <b>Inclure Nombres</b></label></td>
+					</tr>
+					<td>
+					  <textarea
+						readonly
+						id="passwordTextArea"
+						placeholder="Votre Mot de Passe Sécurisé"
+						aria-label="Generated Password" >
+					  </textarea>
+					  <button onclick="copy()">Copier</button>
+					</td>
+					<tr><td>
+					Force : <meter max="4" id="password-strength"></meter> <a style="color:blue;" href="testeurdeforce.html"><SUB>(En savoir plus sur le testeur de force de MDPs)</SUB></a><br/>
+					</td></tr>
+					<tr><td>
+					<button id="generate" class="btn">Generer un Mot de Passe</button>
+					</td></tr>
+				</table>
+			<br>
+		</div>
+		<br>
+		<script>
+			function copy() {			//pour copier le mdp
+			  let textarea = document.getElementById("passwordTextArea");
+			  textarea.select();
+			  document.execCommand("copy");
+			}
+			//generateur
+			var generateBtn = document.querySelector("#generate");
+			function generatePassword() {
+				
+			  var passLengthMin = parseInt(document.getElementById("min_price").value, 10);
+			  var passLengthMax = parseInt(document.getElementById("max_price").value, 10);
+
+			  var passLength = Math.floor( Math.random() * (passLengthMax - passLengthMin) ) + passLengthMin;
+			  
+			  var speChar = document.getElementById("speciaux").checked;
+			  var num = document.getElementById("nombres").checked;
+			  var lowerChar = document.getElementById("minuscules").checked;
+			  var upperChar = document.getElementById("majuscules").checked;
+			  
+			  if (speChar===false && num===false && lowerChar===false && upperChar===false)
+				return;
+			  if (speChar) 
+				var speChar = ["!@#$%^&*()"];
+			  if (speChar===false) 
+				var speChar = [""];
+			  if (num) 
+				var num = ["0123456789"]
+			  if (num===false) 
+				var num = [""]
+			  if (lowerChar) 
+				var lowerChar = ["abcdefghijklmnopqrstuvwxyz"]
+			  if (lowerChar===false) 
+				var lowerChar = [""]
+			  if (upperChar) 
+				var upperChar = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"]
+			  if (upperChar===false) 
+				var upperChar = [""]
+				
+			  var randomChar = speChar + num + lowerChar + upperChar
+			  //tout ce bordel de javascript juste pour 'obligatoirement' inclure speciaux||num||minuscule||majuscule
+			  var speCharString = String(speChar);
+			  var numString = String(num);
+			  var lowerCharString = String(lowerChar);
+			  var upperCharString = String(upperChar);
+			  
+			  var speCharRandom = speCharString[Math.floor(Math.random() * speCharString.length)];
+			  if (speCharRandom==undefined) {speCharRandom = ""};
+			  var numRandom = numString[Math.floor(Math.random() * numString.length)];
+			  if (numRandom==undefined) {numRandom = ""};
+			  var lowerCharRandom = lowerCharString[Math.floor(Math.random() * lowerCharString.length)];
+			  if (lowerCharRandom==undefined) {lowerCharRandom = ""};
+			  var upperCharRandom = upperCharString[Math.floor(Math.random() * upperCharString.length)] 
+			  if (upperCharRandom==undefined) {upperCharRandom = ""};
+		      
+			  var password = speCharRandom + numRandom + lowerCharRandom + upperCharRandom;
+			  var loopshit = passLength-password.length;
+			  for (var i =0; i < loopshit; i++) {
+				var trueRandom = randomChar[Math.floor(Math.random() * randomChar.length)];
+				password += trueRandom;
+			  }
+			  function shuffle(wd){var t="";for(wd=wd.split("");wd.length>0;)t+=wd.splice(wd.length*Math.random()<<0,1);return t}      //fonction pour melanger le mdp (car sinon on aura speciaux+num+minuscule+majuscule au debut)
+			  return shuffle(password);
+			}
+			function writePassword() {
+				var password = generatePassword();
+				var passwordText = document.querySelector("#passwordTextArea");
+				if (password === undefined) {
+					passwordText.value = " ";
+				}
+				else {
+					passwordText.value = password;
+				}
+			}
+			generateBtn.addEventListener("click", writePassword);
+			generateBtn.addEventListener("click", function() {
+				var val = document.getElementById("passwordTextArea").value;
+				var result = zxcvbn(val);
+				document.getElementById('password-strength').value = result.score;
+			});
+			
+		</script>
+	</body>
+</html>
