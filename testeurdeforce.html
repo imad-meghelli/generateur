@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+	<head>
+		<title>Generateur de mots de passe - PASSWORLD</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="monStyleExterne.CSS">
+	
+		<link rel="stylesheet" href="jquery-ui.css" type="text/css" media="all" />
+		<script src="jquery.min.js" type="text/javascript"></script>
+		<script src="jquery-ui.min.js" type="text/javascript"></script>
+		<script src="./price_range_script.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="./price_range_style.css"/>
+		<script src="zxcvbn.js"></script>
+	</head>
+	
+	<style>
+		header {
+			color : #B22222;
+			border-style : solid;
+			border-color : #B22222;
+			border-radius : 10px;
+			background-image : url('world_map.jpg');
+			background-position: center top;
+			background-repeat: no-repeat;
+			background-size : 50% 70%;
+		}
+		nav {
+			background-color:#B22222;
+			text-align : center;
+		}
+		fieldset {
+			border-style : dashed;
+			border-color : #B22222;
+			border-top-left-radius : 10px;
+			border-top-right-radius : 10px;
+		}
+		legend {
+			color : #B22222;
+			font-size : 20px;
+			font-weight : bold;
+			font-variant : small-caps;
+			text-decoration : underline overline;
+			font-family : "Lucida Calligraphy", "Lucida Handwriting", cursive;
+		}
+		a{
+			color : white;
+			font-size : 20px;
+			line-height : 30px;
+			text-decoration : none;
+		}
+		input {
+			height : 20px;
+			border-radius : 10px;
+		}
+		select {
+			height : 25px;
+			border-top-left-radius : 10px;
+			border-bottom-left-radius : 10px;
+		}
+		input, select, option, textarea{
+			font-weight : bold ;
+		}
+		input[type="radio"], input[type="date"], input[type="file"], select {
+			cursor : pointer;
+		}
+		input[type="submit"]{
+			width : 50px;
+			height: 50px;
+			border-style : solid;
+			border-color : green;
+			border-radius : 10px;
+			background-image: url('submit.png');
+			background-size: 100% 100%;
+		}
+	</style>
+	<body>
+		<header>
+			<table>
+				<tr>
+					<td width="17%">
+						<img src="passworld.png" width="300px" height="90px">
+					</td>
+					<td width="83%">
+						<h1 align="right"><i>Passwords made easy</i></h1>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<nav>
+				<ul>
+					<li style="display:inline"><a href="generator.html"><button style="border-style:inset;">Générateur de mots de passe</button></a>&nbsp;&nbsp;&nbsp;</li>
+					<li style="display:inline"><a href="gestionnaire.html"><button>Gestionnaire de mots de passe</button></a>&nbsp;&nbsp;&nbsp;</li>
+					<li style="display:inline"><a href="testeurdeforce.html"><button>Test de force de mots de passe</button></a>&nbsp;&nbsp;&nbsp;</li>
+					<li style="display:inline"><a href="faq.html"><button>À propos & FAQ</button></a>&nbsp;&nbsp;&nbsp;</li>
+				</ul>
+			</nav>	
+		</header>
+		<div>
+			https://lowe.github.io/tryzxcvbn/
+		</div>
+		<br>
+	</body>
+</html>
