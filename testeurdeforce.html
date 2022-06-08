@@ -1,19 +1,16 @@
-<!DOCTYPE HTML>
-<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
-	<head>
-		<title>Generateur de mots de passe - PASSWORLD</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="monStyleExterne.CSS">
-	
-		<link rel="stylesheet" href="jquery-ui.css" type="text/css" media="all" />
-		<script src="jquery.min.js" type="text/javascript"></script>
-		<script src="jquery-ui.min.js" type="text/javascript"></script>
-		<script src="./price_range_script.js" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="./price_range_style.css"/>
-		<script src="zxcvbn.js"></script>
-	</head>
-	
-	<style>
+<html>
+  <head>
+    <title>Testeur de Force</title>
+
+    <script type="text/javascript" src="./jquery.js">
+    </script>
+    <script type="text/javascript" src="./mustache.js">
+    </script>
+    <script data-main="demo" src="./require.js">
+    </script>
+  </head>
+  <body>
+    <style type="text/css">
 		header {
 			color : #B22222;
 			border-style : solid;
@@ -72,8 +69,31 @@
 			background-image: url('submit.png');
 			background-size: 100% 100%;
 		}
-	</style>
-	<body>
+      body {
+        font-family: monospace;
+      }
+
+      .match-sequence table {
+        display: inline;
+        margin-right: 30px;
+      }
+
+      .match-sequence {
+        margin-bottom: 100px;
+      }
+
+      .match-sequence > table:nth-child(odd) {
+        background-color: #ccc;
+      }
+      .match-sequence > table:nth-child(even) {
+        background-color: #eee;
+      }
+
+      #examples-container {
+        margin-top: 200px;
+      }
+
+    </style>
 		<header>
 			<table>
 				<tr>
@@ -95,9 +115,10 @@
 				</ul>
 			</nav>	
 		</header>
-		<div>
-			https://lowe.github.io/tryzxcvbn/
-		</div>
-		<br>
-	</body>
+	<br/><br/><br/><br/><br/>
+    <input id="search-bar" type="text" size="50" />
+    <div id="search-results">
+    </div>
+
+  </body>
 </html>
